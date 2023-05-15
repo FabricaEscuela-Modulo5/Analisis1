@@ -4,7 +4,10 @@ on:
     branches:
       - '*'
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened] # additional types: [closed, ready_for_review, reopened]
+  workflow_dispatch:
+permissions:
+    pull-requests: read # allows SonarCloud to decorate PRs with analysis results  
 jobs:
   sonarcloud:
     name: SonarCloud
