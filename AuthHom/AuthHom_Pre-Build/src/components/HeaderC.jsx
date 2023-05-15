@@ -1,4 +1,4 @@
-import '../Header.css';
+// import '../Header.css';
 function HeaderC({ showUser }) {
   const userAvatar = showUser ? (
     <div className="header-useravatar">

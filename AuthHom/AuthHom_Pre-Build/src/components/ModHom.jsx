@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../Hom.css";
+// import "../Hom.css";
 
 function SolicitudHom({onUpdateState}) {
   const [nombre, setNombre] = useState("");
