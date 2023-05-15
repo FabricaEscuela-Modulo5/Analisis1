@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import "../Auth.css"
+import "../Auth.css"
 
 export default function Authentication({onUpdateState}) {
   const [username, setUsername] = useState("");

@@ -7,4 +7,7 @@ module.exports = {
     "!src/*",
     "!src/assets/**/*",
   ],
+  moduleNameMapper: {
+    ".css$": "identity-obj-proxy",
+  },
 };

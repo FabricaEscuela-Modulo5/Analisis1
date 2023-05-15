@@ -1,4 +1,4 @@
-// import '../Footer.css'
+import '../Footer.css'
 function FooterC() {
   return (
     <footer className="app-footer">
