@@ -2,22 +2,23 @@ name: Build
 on:
   push:
     branches:
-      - '*'
+      - "*"
   pull_request:
-    types: [opened, synchronize, reopened] # additional types: [closed, ready_for_review, reopened]
-  workflow_dispatch:
-permissions:
-    pull-requests: read # allows SonarCloud to decorate PRs with analysis results  
+    types: [opened, synchronize, reopened]
 jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+      - name: Install dependencies
+        run: yarn
+      - name: Test and coverage
+        run: yarn jest --coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets. SONARCLOUD_TOKEN }}
