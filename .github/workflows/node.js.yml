@@ -7,7 +7,8 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    branches: ["main"]
+    types: [opened, synchronize, reopened] # additional types: [closed, ready_for_review, reopened]
+  workflow_dispatch:
 
 jobs:
   build:
