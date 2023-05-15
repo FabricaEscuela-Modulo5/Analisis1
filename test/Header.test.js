@@ -4,7 +4,7 @@
 import "@testing-library/jest-dom";
 // NOTE: jest-dom adds handy assertions to Jest and is recommended, but not required
 import { render, fireEvent, screen } from "@testing-library/react";
-import HeaderC from "../src/components/HeaderC";
+import HeaderC from "../src/components/HeaderC"
 
 describe("Test de renderizacion", () => {
   let componente;
