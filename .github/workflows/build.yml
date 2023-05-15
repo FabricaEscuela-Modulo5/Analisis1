@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - 'main'
+      - main
   pull_request:
     types: [opened, synchronize, reopened] # additional types: [closed, ready_for_review, reopened]
   workflow_dispatch:
