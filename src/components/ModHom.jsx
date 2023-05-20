@@ -1,11 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Hom.css";
+import CrudFormHom from "./crud/CrudFormHom";
+import CrudTableHom from "./crud/CrudTableHom";
 
 function SolicitudHom({onUpdateState}) {
   const [nombre, setNombre] = useState("");
   const [cedula, setCedula] = useState("");
   const [facultad, setFacultad] = useState("");
   const [programa, setPrograma] = useState("");
+
+  const [solicitudes, setSolicitudes] = useState(() => {
+    const saveSolicitudes = window.localStorage.getItem("solicitudesData")
+    if (saveSolicitudes) {
+      return JSON.parse(saveSolicitudes)
+    } else {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem("solicitudesData", JSON.stringify(solicitudes))
+  }, [solicitudes])
+
+  // Añadir solicitud
+  const addSolicitud = (solicitud) => {
+    setSolicitudes([
+      ...solicitudes,
+      solicitud
+    ])
+  }
+
+  // Eliminar solicitud
+  const deleteSolicitud = id => {
+    const isDelete = window.confirm('¿Desea eliminar el registro con id: '+id)
+    if (isDelete) {
+      const newSolicitudes = solicitudes.filter(el => el.id !== id)
+      setSolicitudes(newSolicitudes)
+    }
+  }
 
   const handleNombreChange = (event) => {
     setNombre(event.target.value);
@@ -90,42 +122,8 @@ function SolicitudHom({onUpdateState}) {
           </div>
         </form>
       </div>
-      <div className="solicitud-tabla">
-        <form action="" method="POST">
-          <div className="rellenar-form">
-            <div>
-              <label>CÓDIGO<span>*</span></label>
-              <input type="number" name="txtCodigo" required placeholder="Código"/>
-            </div>
-            <div>
-              <label>MATERIA<span>*</span></label>
-              <input type="text" name="txtMateria" required placeholder="Nombre Materia"/>
-            </div>
-            <div>
-              <label>PROGRAMA<span>*</span></label>
-              <input type="text" name="txtPrograma" required placeholder="Nombre Programa"/>
-            </div>
-          </div>
-          <div className="rellenar-form">
-            <div>
-              <label>PERIODO<span>*</span></label>
-                <input type="number" name="txtPeriodo" required placeholder="Periodo, ej. 20231"/>
-            </div>
-            <div>
-              <label>CALIFICAIÓN<span>*</span></label>
-                <input type="number" name="txtCalificacion" required placeholder="Calificación, ej. 4.2"/>
-            </div>
-            <div>
-              <label>COMENTARIO</label>
-              <input type="text" name="txtComentario" required placeholder="Comentario"/>
-            </div>
-          </div>
-          <div>
-            <input type="submit" className="btn-agregar" name="agregar" value={"Agregar"}/>
-          </div>
-        </form>
-        <hr className="separador"/>
-      </div>
+      <CrudFormHom addSolicitud = {addSolicitud}/>
+      <CrudTableHom solicitudes = {solicitudes} deleteSolicitud={deleteSolicitud}/>
       <div className="solicitud-buttons">
         <button type="submit">ENVIAR SOLICITUD</button>
         <button>LIMPIAR FORMULARIO</button>
