@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../Auth.css"
+import { Link } from "react-router-dom";
 
 export default function Authentication({onUpdateState}) {
   const [username, setUsername] = useState("");
@@ -31,7 +32,7 @@ export default function Authentication({onUpdateState}) {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <button type="submit" onClick={() => onUpdateState(true)}>Ingresar</button>
+        <Link to={'/solicitud'}><button type="submit" onClick={() => onUpdateState(true)}>Ingresar</button></Link>
       </form>
     </div>
   );

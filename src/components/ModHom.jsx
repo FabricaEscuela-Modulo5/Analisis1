@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../Hom.css";
 import CrudFormHom from "./crud/CrudFormHom";
 import CrudTableHom from "./crud/CrudTableHom";
+import { Link } from "react-router-dom";
 
 function SolicitudHom({onUpdateState}) {
   const [nombre, setNombre] = useState("");
@@ -10,7 +11,7 @@ function SolicitudHom({onUpdateState}) {
   const [programa, setPrograma] = useState("");
 
   const [solicitudes, setSolicitudes] = useState(() => {
-    const saveSolicitudes = window.localStorage.getItem("solicitudesData")
+    const saveSolicitudes = window.sessionStorage.getItem("solicitudesData")
     if (saveSolicitudes) {
       return JSON.parse(saveSolicitudes)
     } else {
@@ -19,8 +20,29 @@ function SolicitudHom({onUpdateState}) {
   })
 
   useEffect(() => {
-    window.localStorage.setItem("solicitudesData", JSON.stringify(solicitudes))
+    window.sessionStorage.setItem("solicitudesData", JSON.stringify(solicitudes))
   }, [solicitudes])
+
+  const guardarFormularios = () => {
+    const formulariosData = window.sessionStorage.getItem("solicitudesData");
+    if (formulariosData) {
+      const parsedData = JSON.parse(formulariosData);
+  
+      const existingData = localStorage.getItem("solicitudesData");
+      let mergedData = [];
+  
+      if (existingData) {
+        const parsedExistingData = JSON.parse(existingData);
+        mergedData = [...parsedExistingData, ...parsedData];
+      } else {
+        mergedData = parsedData;
+      }
+  
+      localStorage.setItem("solicitudesData", JSON.stringify(mergedData));
+      window.sessionStorage.clear();
+      alert("Solicitudes eviadas exitosamente")
+    }
+  };
 
   // Añadir solicitud
   const addSolicitud = (solicitud) => {
@@ -74,6 +96,7 @@ function SolicitudHom({onUpdateState}) {
                 <td>NOMBRE:</td>
                 <td>
                   <input
+                    id="nombre"
                     required
                     placeholder="Nombre"
                     type="text"
@@ -84,6 +107,7 @@ function SolicitudHom({onUpdateState}) {
                 <td>CÉDULA:</td>
                 <td>
                   <input
+                    id="cedula"
                     required
                     placeholder="Cédula"
                     type="number"
@@ -96,6 +120,7 @@ function SolicitudHom({onUpdateState}) {
                 <td>FACULTAD:</td>
                 <td>
                   <input
+                    id="facultad"
                     required
                     placeholder="Facultad"
                     type="text"
@@ -106,6 +131,7 @@ function SolicitudHom({onUpdateState}) {
                 <td>PROGRAMA:</td>
                 <td>
                   <input
+                    id="programa"
                     required
                     placeholder="Programa"
                     type="text"
@@ -125,10 +151,10 @@ function SolicitudHom({onUpdateState}) {
       <CrudFormHom addSolicitud = {addSolicitud}/>
       <CrudTableHom solicitudes = {solicitudes} deleteSolicitud={deleteSolicitud}/>
       <div className="solicitud-buttons">
-        <button type="submit">ENVIAR SOLICITUD</button>
+        <button onClick={guardarFormularios}>ENVIAR</button>
         <button>LIMPIAR FORMULARIO</button>
-        <button>VER SOLICITUDES</button>
-        <button onClick={() => onUpdateState(false)}>REGRESAR</button>
+        <Link to={'/verSolicitud'}><button>VER SOLICITUDES</button></Link>
+        <Link to={'/'}><button onClick={() => onUpdateState(false)}>REGRESAR</button></Link>
       </div>
     </div>
   );

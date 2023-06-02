@@ -40,6 +40,20 @@ const CrudFormHom = ({addSolicitud}) => {
         })
     }
 
+    const initialFormData = {
+        codigo: '',
+        materia: '',
+        programa: '',
+        periodo: '',
+        calificacion: '',
+        comentario: '',
+        id: null
+    };
+
+    const handleReset = () => {
+        setFormData(initialFormData);
+      };
+
     return (
         <div className="solicitud-tabla">
             <form onSubmit={handleSubmit}>
@@ -73,7 +87,7 @@ const CrudFormHom = ({addSolicitud}) => {
                 </div>
                 <div className="btn-form">
                     <input type="submit" className="btn-agregar" name="agregar" value={"Agregar"}/>
-                    <input type="reset" className="btn-borrar" name="borrar" value={"Borrar"}/>
+                    <input type="reset" className="btn-borrar" name="borrar" value={"Borrar"} onClick={handleReset}/>
                 </div>
             </form>
             <hr className="separador"/>

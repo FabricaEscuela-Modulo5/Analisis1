@@ -194,22 +194,21 @@
 }
 
 .solicitud-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  width: 90%;
+  text-align: center;
+  border-collapse: collapse;
+  margin-bottom: 3%;
 }
 
 .solicitud-buttons button {
-  background-color: #6c9a06;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
   cursor: pointer;
-  flex: 1;
-  margin-right: 10px;
+  background-color: #0a351c;
+  border: none;
+  color: white;
+  margin: 1%;
+  padding: .8%;
 }
 
-.solicitud-buttons button:last-child {
-  margin-right: 0;
+.solicitud-buttons button:hover {
+  background-color: #6c9a06;
 }
